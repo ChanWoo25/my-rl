@@ -4,9 +4,11 @@ import torch.nn as nn
 import torch.nn.functional as F
 import torch.optim as optim
 from torch.distributions import Categorical
+import numpy as np
+import matplotlib.pyplot as plt
 
 #Hyperparameters
-learning_rate = 0.001
+learning_rate = 0.00015
 gamma         = 0.98
 lmbda         = 0.95
 eps_clip      = 0.1
@@ -96,7 +98,11 @@ def main():
     score = 0.0
     print_interval = 20
 
-    for n_epi in range(10000):
+    # for Plotting
+    epi_axes = []
+    rwd_axes = []
+
+    for n_epi in range(2000):
         s = env.reset()
         done = False
         while not done:
@@ -115,11 +121,24 @@ def main():
 
             model.train_net()
 
+
         if n_epi%print_interval==0 and n_epi!=0:
-            print("# of episode :{}, avg score : {:.1f}".format(n_epi, score/print_interval))
+            reward_avg = score / print_interval
+            print("# of episode :{}, avg score : {:.1f}".format(n_epi, reward_avg))
+            epi_axes.append(n_epi)
+            rwd_axes.append(reward_avg)
             score = 0.0
 
     env.close()
+
+    ### Plotting & Save result
+    plt.plot(epi_axes, rwd_axes, label='PPO/lr=0.00015')
+    plt.xlabel('Episodes')
+    plt.ylabel('Rewards')
+    plt.title("PPO Plot")
+    plt.legend()
+    plt.savefig("plot/PPO_1.png")
+    plt.show()
 
 if __name__ == '__main__':
     main()
