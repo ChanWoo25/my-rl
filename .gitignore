@@ -2,3 +2,5 @@
 build
 log
 plot
+__pycache__/
+data/

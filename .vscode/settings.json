@@ -1,3 +1,10 @@
 {
-  "editor.tabSize": 4
+  "editor.tabSize": 4,
+
+  "python.autoComplete.extraPaths": [
+    "/home/leecw/.local/lib/python3.6/site-packages"
+  ],
+  "python.analysis.extraPaths": [
+    "/home/leecw/.local/lib/python3.6/site-packages"
+  ]
 }

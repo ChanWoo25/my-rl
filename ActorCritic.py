@@ -54,7 +54,10 @@ def main():
     done = False
     s = env.reset()
     while not done:
+
       s = torch.from_numpy(s).float()
+      print(type(s))
+      print(s.shape)
       pi, v = model(s)
 
       m = Categorical(pi)
